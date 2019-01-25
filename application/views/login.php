@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
   <meta charset="utf-8">
   <title>Welcome to CodeIgniter</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" integrity="sha384-PmY9l28YgO4JwMKbTvgaS7XNZJ30MK9FAZjjzXtlqyZCqBY6X6bXIkM++IkyinN+" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <style>
     .btn {width: 50%;border-radius: 0}
     .btn-container {width: 100%;display: block;position: relative;}
@@ -36,14 +36,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php echo form_input(array(
               'name'=>'ue',
               'placeholder'=>'Email',
-              'class' => 'form-control'
+              'class' => 'form-control',
+              'id' => 'email'
             )); ?>
           </div>
           <div class="form-group">
             <?php echo form_password(array(
               'name'=>'up',
               'placeholder'=>'Password',
-              'class' => 'form-control'
+              'class' => 'form-control',
+              'id' => 'pass'
             )); ?>
           </div>
 
@@ -56,7 +58,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </form>
       </div>
     </div>
+    <br>
+    <div class="row">
+      <div class="col-lg-4 col-lg-offset-4 text-center">
+        <h4>Login As</h4>
+        <span class="btn-container">
+          <button type="button" id="logA" class="btn btn-success btn-large pull-left">Alice</button>
+          <i class="btn-sep">OR</i>
+          <button type="button" id="logB" class="btn btn-danger btn-large pull-right">BOB</a>
+        </span>
+      </div>
+    </div>
   </div>
+
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script>
+    $('#logA').click(function(){
+      $('#email').val('alice@cichat.com');
+      $('#pass').val('alice');
+    });
+    $('#logB').click(function(){
+      $('#email').val('bob@cichat.com');
+      $('#pass').val('bob');
+    });
+  </script>
 
 </body>
 </html>

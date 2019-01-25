@@ -9,6 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<style>
 		.table-holder {
 		    max-height: 370px;
+		    height: 370px;
 		    overflow-y: scroll;
 		    border: 1px solid;
 		    margin-top: 2em;
