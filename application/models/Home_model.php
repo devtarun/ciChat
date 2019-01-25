@@ -26,12 +26,24 @@ class Home_model extends CI_Model {
 		$this->db->select('users.un');
 		$this->db->from('message');
 		$this->db->join('users', 'users.id = message.uid', 'inner');		
+		$this->db->order_by('message.id', 'desc');
 		$res = $this->db->get();
 		return $res->result();
 	}
 
-	public function getLastMsg(){
-		$res = $this->db->query('SELECT message.*, users.un FROM message INNER JOIN users ON users.id = message.uid ORDER BY message.id DESC LIMIT 0, 1');
+	public function getLastMsg($lid){
+		$sql = '
+			SELECT
+			    message.*,
+			    users.un
+			FROM
+			    message
+			INNER JOIN users ON users.id = message.uid
+			WHERE message.id > ' . $lid .'
+			ORDER BY 
+				message.id
+		';
+		$res = $this->db->query($sql);
 		return $res->result();
 
 	}

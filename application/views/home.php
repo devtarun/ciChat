@@ -6,6 +6,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<meta charset="utf-8">
 	<title>Welcome to CodeIgniter</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<style>
+		.table-holder {
+		    max-height: 370px;
+		    overflow-y: scroll;
+		    border: 1px solid;
+		    margin-top: 2em;
+		    margin-bottom: 2em;
+		}
+	</style>
 </head>
 <body>
 
@@ -17,23 +26,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</div>
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2">
-				<table class="table table-bordered table-striped" style="margin-top: 2em">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>User Name</th>
-							<th>Date/Time</th>
-						</tr>
-					</thead>
-					<tbody>
-						
-					</tbody>
-				</table>
+				<div class="table-holder">
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>User Name</th>
+								<th>Date/Time</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-lg-12 text-center">
-				<button type="button" onclick="sayHi()" class="btn btn-success btn-flat">Say Hi!</button>
+				<button type="button" onclick="sayHi(120)" class="btn btn-success btn-flat">Say Hi!</button>
 			</div>
 		</div>
 	</div>
@@ -43,31 +54,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	<script>
 		$(document).ready(function(){
-			// setInterval(function(){ getMsgs() }, 500);
+			// var lastId = 0;
 			getMsgs();
 		});
 
-		function sayHi(){
-			$.getJSON("<?php echo base_url('home/sayhi') ?>", function(data){
-				if(Math.floor(data) == data && $.isNumeric(data)) {
-					$.getJSON("<?php echo base_url('home/getLastMsgs') ?>", function(data){
-						$.each( data, function( key, val ) {
-							var o = "<tr>" + 
-										"<td>" + 
-											val.id + 
-										"</td>" + 
-										"<td>" + 
-											val.un + 
-										"</td>" + 
-										"<td>" + 
-											val.mcd + 
-										"</td>" + 
-									"</tr>";
+		function sayHi(lastId){
+			$.getJSON("<?php echo base_url('home/sayhi/' . $this->session->userdata['uid']) ?>", function(currentId){
+				$('table.table tbody').empty();
+				getMsgs();
+			});
+		}
 
-							$('table.table tbody').append(o);
-						});
-					});
-				}
+		function updateMsg(lid){
+			getLastMsgsURI = "<?php echo base_url('home/getLastMsgs/') ?>" + lid;
+			console.log(getLastMsgsURI);
+			$.getJSON(getLastMsgsURI, function(res){
+				$.each( res, function( key, val ) {
+					var o = "<tr>" + 
+								"<td>" + 
+									val.id + 
+								"</td>" + 
+								"<td>" + 
+									val.un + 
+								"</td>" + 
+								"<td>" + 
+									val.mcd + 
+								"</td>" + 
+							"</tr>";
+
+					$('table.table tbody').append(o);
+				});
 			});
 		}
 

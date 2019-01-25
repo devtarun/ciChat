@@ -85,7 +85,8 @@ class Home extends CI_Controller {
 		json_output($result);
 	}
 	public function getLastMsgs(){
-		$result = $this->hm->getLastMsg();
+		$lid = $this->uri->segment(3);
+		$result = $this->hm->getLastMsg($lid);
 		json_output($result);
 	}
 
@@ -95,8 +96,11 @@ class Home extends CI_Controller {
 	}
 
 	public function sayhi(){
+
+		$uid = $this->uri->segment(3);
+
 		$data = [
-			'uid' => $this->session->userdata['uid']
+			'uid' => $uid
 		];
 		$result = $this->hm->setMsg($data);
 		json_output($result);
